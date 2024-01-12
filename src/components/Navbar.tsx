@@ -1,50 +1,57 @@
-import React from "react";
-import MaxWidthWrapper from "./MaxWidthWrapper";
-import Link from "next/link";
-import { buttonVariants } from "./ui/button";
-import { Icons } from "./Icons";
-import NavItems from "./NavItems";
-import Cart from "./Cart";
+import Link from 'next/link'
+import MaxWidthWrapper from './MaxWidthWrapper'
+import { Icons } from './Icons'
+import NavItems from './NavItems'
+import { buttonVariants } from './ui/button'
+import Cart from './Cart'
+import { getServerSideUser } from '@/lib/payload-utils'
+import { cookies } from 'next/headers'
+import UserAccountNav from './UserAccountNav'
+import MobileNav from './MobileNav'
 
-const Navbar = () => {
-  const user = null;
+const Navbar = async () => {
+  const nextCookies = cookies()
+  const { user } = await getServerSideUser(nextCookies)
+
   return (
-    <div className="bg-white sticky z-50 top-0 inset-x-0 h-16">
-      <header className="relative bg-white">
+    <div className='bg-white sticky z-50 top-0 inset-x-0 h-16'>
+      <header className='relative bg-white'>
         <MaxWidthWrapper>
-          <div className="boder-b border-gray-200 ">
-            <div className="flex h-16 items-center ">
-              {/* TODO: Mobile nav */}
-              <div className="ml-4 flex lg:ml-0">
-                <Link href="/">
-                  <Icons.logo className="h-10 w-10" />
+          <div className='border-b border-gray-200'>
+            <div className='flex h-16 items-center'>
+              <MobileNav />
+
+              <div className='ml-4 flex lg:ml-0'>
+                <Link href='/'>
+                  <Icons.logo className='h-10 w-10' />
                 </Link>
               </div>
 
-              <div className="hidden z-50 lg:block lg:self-stretch">
+              <div className='hidden z-50 lg:ml-8 lg:block lg:self-stretch'>
                 <NavItems />
               </div>
 
-              <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+              <div className='ml-auto flex items-center'>
+                <div className='hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6'>
                   {user ? null : (
                     <Link
-                      href="/sign-in"
+                      href='/sign-in'
                       className={buttonVariants({
-                        variant: "ghost",
-                      })}
-                    >
+                        variant: 'ghost',
+                      })}>
                       Sign in
                     </Link>
                   )}
-                   {user ? null : (
+
+                  {user ? null : (
                     <span
                       className='h-6 w-px bg-gray-200'
                       aria-hidden='true'
                     />
                   )}
-  {user ? (
-                    <p></p>
+
+                  {user ? (
+                    <UserAccountNav user={user} />
                   ) : (
                     <Link
                       href='/sign-up'
@@ -55,7 +62,7 @@ const Navbar = () => {
                     </Link>
                   )}
 
-{user ? (
+                  {user ? (
                     <span
                       className='h-6 w-px bg-gray-200'
                       aria-hidden='true'
@@ -71,8 +78,8 @@ const Navbar = () => {
                     </div>
                   )}
 
-<div className='ml-4 flow-root lg:ml-6'>
-                   <Cart />
+                  <div className='ml-4 flow-root lg:ml-6'>
+                    <Cart />
                   </div>
                 </div>
               </div>
@@ -81,7 +88,7 @@ const Navbar = () => {
         </MaxWidthWrapper>
       </header>
     </div>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
