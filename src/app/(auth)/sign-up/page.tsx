@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { toast} from 'sonner';
 
 
 
@@ -27,7 +28,11 @@ const Page = () => {
 
   // const { data } = trpc.anyApiRoute.useQuery()
    const {mutate, isLoading} = trpc.auth.createPayloadUser.useMutation({
-
+     onError: (err) => {
+      if(err.data?.code === 'CONFLICT') {
+         toast.error("This is already in use. Sign in instead?")
+      }
+     }
    })
 
   const onSubmit = ({
