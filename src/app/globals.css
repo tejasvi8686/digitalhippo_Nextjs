@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+ 
+
+
 
 @layer base {
   :root {
@@ -49,6 +52,9 @@
   }
 }
 
+
+
+ 
 @layer base {
   * {
     @apply border-border;
@@ -58,15 +64,23 @@
   }
 }
 
-.swiper-pagination-bullet {
-  width: 7px !important;
-  height: 7px !important;
-  background: rgba(255, 255, 255, 0.2);
-  scale: 0.9 !important;
+::-webkit-scrollbar {
+  width: 7px;
 }
 
-.swiper-pagination-bullet-active {
-  color: #fff;
-  background: white !important;
-  scale: 1 !important ;
+/* Track */
+::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #2563EB;
+  border-radius: 12px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #87BEFB;
+  border-radius: 12px;
 }
